@@ -1,7 +1,8 @@
 namespace Interfaces;
 
 using Enums;
+
 interface IRoutable
 {
-    PriorityKey GetPriorityKey();
+    PriorityKey getPriorityKey(int intKey);
 }

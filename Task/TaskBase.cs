@@ -1,14 +1,14 @@
+namespace Task;
+
 using Enums;
 using Interfaces;
-
-namespace Task;
 
 public abstract class TaskBase : IRoutable
 {
     public Guid id = Guid.NewGuid();
     public string Title;
-    public PriorityKey GetPriorityKey()
+    public PriorityKey getPriorityKey(int intKey)
     {
-        return (PriorityKey)(new Random()).Next(1, 4);
+        return (PriorityKey)intKey;
     }
 }
