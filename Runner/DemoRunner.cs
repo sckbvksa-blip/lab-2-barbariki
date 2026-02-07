@@ -17,7 +17,7 @@ public class DemoRunner
                 case ("1"): data.createDelivery(); break;
                 case ("2"): data.updateDelivery(); break;
                 case ("3"): data.ShowAllDeliviries(); break;
-                case ("4"): data.showAllPackingDeliveries();break;
+                case ("4"): data.showDeliveries(data.Repository.Delivered, "delivered");break;
                 case ("5"): data.sendDelivery(); break;
                 case ("6"): break;
                 case ("7"): break;

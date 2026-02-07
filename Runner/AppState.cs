@@ -16,34 +16,27 @@ public class AppState
     }
     public void ShowAllDeliviries()
     {
-        showAllPackingDeliveries();
-        showAllDeparturedDeliveries();
-        showAllDeliviriedDel();
+        showDeliveries(Repository.Deliveries, "packing");
+        showDeliveries(Repository.Departured, "departure");
+        showDeliveries(Repository.Delivered, "delivered");
     }
-    public void showAllPackingDeliveries()
+    public void showDeliveries(List<Delivery> deliveries, string title)
     {
-        if (Repository.Deliveries.Count != 0) { Console.WriteLine("Packing:"); }
-        for (int i = 0; i < Repository.Deliveries.Count; i++)
+        if (deliveries.Count != 0)
         {
-            Console.WriteLine($"{i + 1}. {Repository.Deliveries[i].Title}.");
+            Console.WriteLine("Packing:");
+            
+            for (int i = 0; i < deliveries.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {deliveries[i].Title}.");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"There are no {title} deliviries");
         }
     }
-    public void showAllDeparturedDeliveries()
-    {
-        if (Repository.Departured.Count != 0) { Console.WriteLine("Departure:"); }
-        for (int i = 0; i < Repository.Departured.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {Repository.Departured[i].Title}.");
-        }
-    }
-    public void showAllDeliviriedDel()
-    {
-        if (Repository.Delivered.Count != 0) { Console.WriteLine("Delivered:"); }
-        for (int i = 0; i < Repository.Delivered.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {Repository.Delivered[i].Title}.");
-        }
-    }
+    
     public void updateDelivery()
     {
         if (Repository.Deliveries.Count != 0 || Repository.Delivered.Count != 0 || Repository.Departured.Count != 0)
@@ -82,6 +75,8 @@ public class AppState
                     if (delivery.Status == DeliveryStatus.Packing) Repository.Deliveries.Add(delivery);
                     else if (delivery.Status == DeliveryStatus.Departure) Repository.Departured.Add(delivery);
                     else if (delivery.Status == DeliveryStatus.Delivered) Repository.Delivered.Add(delivery);
+                    
+                    Console.WriteLine("Successfully updated.");
                 }
             }
             else
@@ -90,7 +85,6 @@ public class AppState
             }
         }
         else { Console.WriteLine("There are no deliviries"); }
-        Console.WriteLine("Successfully updated.");
 
     }
     public int getStatusFromUser()
@@ -141,7 +135,7 @@ public class AppState
     {
         if (Repository.Deliveries.Count != 0)
         {
-            showAllPackingDeliveries();
+            showDeliveries(Repository.Deliveries, "packing");
             string text = getTitleFromUser();
             Delivery delivery = Repository.Deliveries.Find(del => del.Title == text);
 
