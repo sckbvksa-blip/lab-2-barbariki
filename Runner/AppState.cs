@@ -158,6 +158,8 @@ public class AppState
     {
         if (action == DeliveryAction.Add)
         {
+            delivery.Status = (DeliveryStatus)getStatusFromUser();
+            
             if (delivery.Status == DeliveryStatus.Packing) Repository.Deliveries.Add(delivery);
             else if (delivery.Status == DeliveryStatus.Departure) Repository.Departured.Add(delivery);
             else if (delivery.Status == DeliveryStatus.Delivered) Repository.Delivered.Add(delivery);
@@ -165,7 +167,6 @@ public class AppState
         }
         else if (action == DeliveryAction.Delete)
         {
-            delivery.Status = (DeliveryStatus)getStatusFromUser();
             
             if (delivery.Status == DeliveryStatus.Packing) Repository.Deliveries.Remove(delivery);
             else if (delivery.Status == DeliveryStatus.Departure) Repository.Departured.Remove(delivery);
