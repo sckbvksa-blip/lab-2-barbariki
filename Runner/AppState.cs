@@ -12,8 +12,8 @@ public class AppState
     public DeliveryRepository Repository;
     public List<DayData> DaysStorage;
     public DayData CurrentDay;
-    public string DayFileName { get; set; } = $@"{Path.Combine(Directory.GetCurrentDirectory(), @"Data\DayData.json")}";
-    public string RepositoryFileName { get; set; } = $@"{Path.Combine(Directory.GetCurrentDirectory(), @"Data\RepositoryData.json")}";
+    public string DayFileName { get; set; } = $@"{Path.Combine(Directory.GetCurrentDirectory(), @"Data", @"DayData.json")}";
+    public string RepositoryFileName { get; set; } = $@"{Path.Combine(Directory.GetCurrentDirectory(), @"Data", @"RepositoryData.json")}";
     public void createDelivery()
     {
         string title = getTitleFromUser();
