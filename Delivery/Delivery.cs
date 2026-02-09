@@ -6,19 +6,19 @@ using Task;
 
 public class Delivery : TaskBase
 {
-    public PriorityKey Priority { get; set; }
-    public DeliveryStatus Status { get; set; }
+    public PriorityKey priority { get; set; }
+    public DeliveryStatus status { get; set; }
 
     public Delivery(string title, int intPriority)
     {
-        Title = title;
-        Status = DeliveryStatus.Packing;
-        Priority = this.getPriorityKey(intPriority);
+        base.title = title;
+        status = DeliveryStatus.Packing;
+        priority = this.GetPriorityKey(intPriority);
     }
     public Delivery() { }
 
     public override string ToString()
     {
-        return $"{Title} - {Priority}";
+        return $"{title} - {priority}";
     }
 }

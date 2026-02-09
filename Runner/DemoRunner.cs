@@ -9,23 +9,52 @@ public class DemoRunner
         AppState data = new AppState();
         while (true)
         {
-            Menu.printMenu();
+            Menu.PrintMenu();
             string answer = Console.ReadLine();
             Console.WriteLine("----------------------");
             switch (answer)
             {
                 case ("1"):
                     Console.Clear();
-                    data.createDelivery(); break;
-                case ("2"): data.updateDelivery(); break;
-                case ("3"): data.ShowAllDeliviries(); break;
-                case ("4"): data.showDeliveries(data.Repository.Deliveries, "packing"); break;
-                case ("5"): data.sendDelivery(); break;
-                case ("6"): data.QuickSortByPriority(data.Repository.Deliveries, 0, data.Repository.Deliveries.Count - 1); break;
-                case ("7"): data.showDayResult(data.CurrentDay); break;
-                case ("8"): data.NextDay(); break;
-                case ("9"): data.showAllDaysResult(); break;
-                case ("10"): data.SaveRepositoryData(); return;
+                    data.CreateDelivery(); 
+                    break;
+                case ("2"):
+                    Console.Clear();
+                    data.UpdateDelivery(); 
+                    break;
+                case ("3"):
+                    Console.Clear();
+                    data.ShowAllDeliviries(); 
+                    break;
+                case ("4"):
+                    Console.Clear();
+                    data.ShowDeliveries(data.repository.deliveries, "packing"); break;
+                case ("5"):
+                    Console.Clear();
+                    data.SendDelivery(); 
+                    break;
+                case ("6"):
+                    Console.Clear();
+                    data.QuickSortByPriority(data.repository.deliveries, 0, data.repository.deliveries.Count - 1);
+                    Console.WriteLine("Successfully sorted by priority.");
+                    break;
+                case ("7"):
+                    Console.Clear();
+                    data.ShowDayResult(data.currentDay); 
+                    break;
+                case ("8"):
+                    Console.Clear();
+                    data.NextDay(); 
+                    break;
+                case ("9"):
+                    Console.Clear();
+                    data.ShowAllDaysResult(); 
+                    break;
+                case ("10"):
+                    Console.Clear();
+                    data.SaveDayData();
+                    data.SaveRepositoryData(); 
+                    return;
             }
         }
     }

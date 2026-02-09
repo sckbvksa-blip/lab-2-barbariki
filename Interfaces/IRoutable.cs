@@ -4,5 +4,5 @@ using Enums;
 
 interface IRoutable
 {
-    PriorityKey getPriorityKey(int intKey);
+    PriorityKey GetPriorityKey(int intKey);
 }

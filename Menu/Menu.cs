@@ -9,7 +9,7 @@ public class Menu
         "Day result", "Next day", "Show all days result", "Exit"
     };
 
-    public static void printMenu()
+    public static void PrintMenu()
     {
         Console.WriteLine("----------------------");
         for (int i = 0; i < menuItems.Length; i++)
