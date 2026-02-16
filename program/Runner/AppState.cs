@@ -196,11 +196,34 @@ public class AppState
     {
         if (action == DeliveryAction.Add)
         {
+            DeliveryStatus oldStatus = delivery.status;
             delivery.status = (DeliveryStatus)GetStatusFromUser();
 
+            if (oldStatus == DeliveryStatus.Delivered)
+            {   
+                repository.delivered.Remove(delivery);
+            }
+            else if (oldStatus == DeliveryStatus.Departure)
+            {
+                repository.departured.Remove(delivery);
+                currentDay.AmountOfDepartured--;
+            }
+            else if (oldStatus == DeliveryStatus.Packing)
+            {
+                repository.deliveries.Remove(delivery);
+            }
+            
             if (delivery.status == DeliveryStatus.Packing) repository.deliveries.Add(delivery);
-            else if (delivery.status == DeliveryStatus.Departure) repository.departured.Add(delivery);
-            else if (delivery.status == DeliveryStatus.Delivered) repository.delivered.Add(delivery);
+            else if (delivery.status == DeliveryStatus.Departure)
+            {
+                repository.departured.Add(delivery);
+                currentDay.AmountOfDepartured++;
+            }
+            else if (delivery.status == DeliveryStatus.Delivered)
+            {
+                repository.delivered.Add(delivery);
+                currentDay.AmountOfDepartured++;
+            }
 
         }
         else if (action == DeliveryAction.Delete)
