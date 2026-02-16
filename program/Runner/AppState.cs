@@ -194,6 +194,12 @@ public class AppState
 
     public void AddOrDeleteDelivery(Delivery delivery, DeliveryAction action)
     {
+        if (delivery == null)
+        {
+            Console.WriteLine("Delivery not found.");
+            return;
+        }
+        
         if (action == DeliveryAction.Add)
         {
             DeliveryStatus oldStatus = delivery.status;
