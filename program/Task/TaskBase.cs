@@ -11,4 +11,9 @@ public abstract class TaskBase : IRoutable
     {
         return (PriorityKey)intKey;
     }
+    public TaskBase() { }
+    public TaskBase(string title)
+    {
+        this.title = title;
+    }
 }
