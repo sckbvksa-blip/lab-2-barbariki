@@ -26,6 +26,7 @@ public class AppState
         "Data",
         "RepositoryData.json"
     );
+
     public void CreateDelivery()
     {
         string title = GetTitleFromUser();
@@ -33,12 +34,14 @@ public class AppState
         repository.deliveries.Add(new Delivery(title, keyPriority));
         Console.WriteLine("Successfully added.");
     }
+
     public void ShowAllDeliviries()
     {
         ShowDeliveries(repository.deliveries, "packing");
         ShowDeliveries(repository.departured, "departure");
         ShowDeliveries(repository.delivered, "delivered");
     }
+
     public void ShowDeliveries(List<Delivery> deliveries, string title)
     {
         if (deliveries.Count != 0)
@@ -55,6 +58,7 @@ public class AppState
             Console.WriteLine($"There are no {title} deliviries");
         }
     }
+
     public AppState()
     {
         repository = GetRepositoryData();
@@ -66,68 +70,69 @@ public class AppState
             daysStorage.Add(currentDay);
         }
     }
+
     public void UpdateDelivery()
     {
-        if (repository.deliveries.Count != 0 || repository.delivered.Count != 0 || repository.departured.Count != 0)
+        if (repository.deliveries.Count == 0 && repository.delivered.Count == 0 && repository.departured.Count == 0)
         {
-            ShowAllDeliviries();
-            Console.WriteLine();
-
-            string title = GetTitleFromUser();
-            
-            Delivery delivery = FindDelivery(title);
-
-            if (delivery != null)
-            {
-                Console.WriteLine("Delivery found.\n");
-                Console.WriteLine("----------------------");
-                string answer = string.Empty;
-
-                while (true)
-                {
-                    Console.WriteLine("Delete(1) or change status(2)?");
-                    answer = Console.ReadLine();
-                    if (answer != "1" && answer != "2")
-                    {
-                        Console.WriteLine("Wrong input! Try again.");
-                        continue;
-                    }
-                    else break;
-                }
-
-                AddOrDeleteDelivery(delivery, DeliveryAction.Delete);
-
-                if (answer == "2")
-                {
-                    AddOrDeleteDelivery(delivery, DeliveryAction.Add);
-                    Console.WriteLine("Successfully updated.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Delivery not found!");
-            }
+            Console.WriteLine("There are no deliviries");
         }
-        else { Console.WriteLine("There are no deliviries"); }
+        ShowAllDeliviries();
+        Console.WriteLine();
+
+        string title = GetTitleFromUser();
+
+        Delivery delivery = FindDelivery(title);
+
+        if (delivery == null)
+        {
+            Console.WriteLine("Delivery not found!");
+            return;
+        }
+        Console.WriteLine("Delivery found.\n");
+        Console.WriteLine("----------------------");
+
+        string answer = string.Empty;
+        while (true)
+        {
+            Console.WriteLine("Delete(1) or change status(2)?");
+            answer = Console.ReadLine();
+            if (answer != "1" && answer != "2")
+            {
+                Console.WriteLine("Wrong input! Try again.");
+                continue;
+            }
+            else break;
+        }
+
+        AddOrDeleteDelivery(delivery, DeliveryAction.Delete);
+
+        if (answer == "2")
+        {
+            AddOrDeleteDelivery(delivery, DeliveryAction.Add);
+            Console.WriteLine("Successfully updated.");
+        }
 
     }
+
     public int GetStatusFromUser()
     {
         while (true)
         {
             Console.WriteLine("1 - Packing.\n2 - Departue.\n3 - Delivered.");
             Console.Write("Enter key: ");
-            
+
             string text = Console.ReadLine();
-            
+
             if (text == "1" || text == "2" || text == "3")
             {
                 return int.Parse(text);
             }
-            
+
             Console.WriteLine("Wrong input!\nTry again.");
         }
     }
+
     public string GetTitleFromUser()
     {
         while (true)
@@ -144,43 +149,48 @@ public class AppState
             return title;
         }
     }
+
     public int GetIntPriorityKeyFromUser()
     {
         while (true)
         {
             Console.WriteLine("1 - Important.\n2 - Not much.\n3 - Poop.");
             Console.Write("Enter key: ");
-            
+
             string text = Console.ReadLine();
-            
+
             if (text == "1" || text == "2" || text == "3")
             {
                 return int.Parse(text);
             }
-            
+
             Console.WriteLine("Wrong input!\nTry again.");
         }
     }
+
     public void SendDelivery()
     {
-        if (repository.deliveries.Count != 0)
+        if (repository.deliveries.Count == 0)
         {
-            ShowDeliveries(repository.deliveries, "packing");
-            string text = GetTitleFromUser();
-            
-            Delivery delivery = repository.deliveries.Find(del => del.title == text);
-
-            if (delivery != null)
-            {
-                repository.deliveries.Remove(delivery);
-                delivery.status = DeliveryStatus.Departure;
-                repository.departured.Add(delivery);
-                currentDay.AmountOfDepartured++;
-                Console.WriteLine("Successfully sent.");
-            }
-            else { Console.WriteLine("Delivery not found."); }
+            Console.WriteLine("There are no deliviries");
+            return;
         }
-        else { Console.WriteLine("There are no deliviries"); }
+        ShowDeliveries(repository.deliveries, "packing");
+        string text = GetTitleFromUser();
+
+        Delivery delivery = repository.deliveries.Find(del => del.title == text);
+
+        if (delivery != null)
+        {
+            Console.WriteLine("Delivery not found.");
+            return;
+        }
+
+        repository.deliveries.Remove(delivery);
+        delivery.status = DeliveryStatus.Departure;
+        repository.departured.Add(delivery);
+        currentDay.AmountOfDepartured++;
+        Console.WriteLine("Successfully sent.");
     }
 
     public Delivery FindDelivery(string title)
@@ -199,14 +209,14 @@ public class AppState
             Console.WriteLine("Delivery not found.");
             return;
         }
-        
+
         if (action == DeliveryAction.Add)
         {
             DeliveryStatus oldStatus = delivery.status;
             delivery.status = (DeliveryStatus)GetStatusFromUser();
 
             if (oldStatus == DeliveryStatus.Delivered)
-            {   
+            {
                 repository.delivered.Remove(delivery);
             }
             else if (oldStatus == DeliveryStatus.Departure)
@@ -218,7 +228,7 @@ public class AppState
             {
                 repository.deliveries.Remove(delivery);
             }
-            
+
             if (delivery.status == DeliveryStatus.Packing) repository.deliveries.Add(delivery);
             else if (delivery.status == DeliveryStatus.Departure)
             {
@@ -240,10 +250,12 @@ public class AppState
             else if (delivery.status == DeliveryStatus.Delivered) repository.delivered.Remove(delivery);
         }
     }
+
     public void ShowDayResult(DayData day)
     {
         Console.WriteLine($"Day {day.DayCounter}: {day.AmountOfDepartured} departured deliveries.");
     }
+
     public void ShowAllDaysResult()
     {
         Console.WriteLine("Results:");
@@ -252,6 +264,7 @@ public class AppState
             ShowDayResult(daysStorage[i]);
         }
     }
+
     public void NextDay()
     {
         SaveDayData();
@@ -259,26 +272,28 @@ public class AppState
         daysStorage.Add(currentDay);
         Console.WriteLine("The next day came.");
     }
+
     public void SaveDayData()
     {
         EnsureDataDirectoryExists();
         string json = JsonSerializer.Serialize(daysStorage);
         File.WriteAllText(dayFileName, json);
     }
+
     public List<DayData> GetDayData()
     {
         if (!File.Exists(dayFileName))
         {
             return new List<DayData>();
         }
-        
+
         string json = File.ReadAllText(dayFileName);
-            
+
         if (string.IsNullOrWhiteSpace(json))
         {
             return new List<DayData>();
         }
-        
+
         try
         {
             return JsonSerializer.Deserialize<List<DayData>>(json);
@@ -287,33 +302,38 @@ public class AppState
         {
             return new List<DayData>();
         }
-        
+
     }
-    
+
     public void SaveRepositoryData()
     {
         EnsureDataDirectoryExists();
         string json = JsonSerializer.Serialize(repository);
         File.WriteAllText(repositoryFileName, json);
     }
+
     public DeliveryRepository GetRepositoryData()
     {
-        if (File.Exists(repositoryFileName))
+        if (!File.Exists(repositoryFileName))
         {
-            string json = File.ReadAllText(repositoryFileName);
-            if (!string.IsNullOrWhiteSpace(json))
-            {
-                try
-                {
-                    return JsonSerializer.Deserialize<DeliveryRepository>(json);
-                }
-                catch (Exception)
-                {
-                    return new DeliveryRepository();
-                }
-            }
+            return new DeliveryRepository();
         }
-        return new DeliveryRepository();
+
+        string json = File.ReadAllText(repositoryFileName);
+
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return new DeliveryRepository();
+        }
+
+        try
+        {
+            return JsonSerializer.Deserialize<DeliveryRepository>(json);
+        }
+        catch (Exception)
+        {
+            return new DeliveryRepository();
+        }
     }
 
     public void EnsureDataDirectoryExists()
