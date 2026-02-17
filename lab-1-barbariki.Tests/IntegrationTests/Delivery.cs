@@ -24,7 +24,7 @@ public class DeliveryTest
         // Act
         appState.repository.deliveries.Add(new Delivery(title, 1));
         Delivery delivery = appState.FindDelivery(title);
-        appState.AddOrDeleteDelivery(delivery, DeliveryAction.Delete);
+        appState.DeleteDelivery(delivery);
         
         // Assert
         Assert.That(appState.repository.deliveries.Count, Is.EqualTo(0));

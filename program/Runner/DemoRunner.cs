@@ -6,54 +6,67 @@ public class DemoRunner
 {
     public static void Run()
     {
+        Console.Clear();
         AppState data = new AppState();
+        
         while (true)
         {
             Menu.PrintMenu();
             string answer = Console.ReadLine();
+
             Console.WriteLine("----------------------");
+
             switch (answer)
             {
                 case ("1"):
                     Console.Clear();
-                    data.CreateDelivery(); 
+                    data.CreateDelivery(MenuReader.GetTitleFromUser(), MenuReader.GetIntPriorityKeyFromUser());
                     break;
+
                 case ("2"):
                     Console.Clear();
-                    data.UpdateDelivery(); 
+                    data.UpdateHelper();
                     break;
+
                 case ("3"):
                     Console.Clear();
-                    data.ShowAllDeliviries(); 
+                    MenuWritter.ShowAllDeliveries(data);
                     break;
+
                 case ("4"):
                     Console.Clear();
-                    data.ShowDeliveries(data.repository.deliveries, "packing"); break;
+                    MenuWritter.ShowDeliveries(data.repository.deliveries, "packing"); break;
+
                 case ("5"):
                     Console.Clear();
-                    data.SendDelivery(); 
+                    data.SendHelper();
                     break;
+
                 case ("6"):
                     Console.Clear();
                     data.QuickSortByPriority(data.repository.deliveries, 0, data.repository.deliveries.Count - 1);
                     Console.WriteLine("Successfully sorted by priority.");
                     break;
+
                 case ("7"):
                     Console.Clear();
-                    data.ShowDayResult(data.currentDay); 
+                    MenuWritter.ShowDayResult(data.currentDay);
                     break;
+
                 case ("8"):
                     Console.Clear();
-                    data.NextDay(); 
+                    data.NextDay();
                     break;
+
                 case ("9"):
                     Console.Clear();
-                    data.ShowAllDaysResult(); 
+                    MenuWritter.ShowAllDaysResult(data);
                     break;
+
                 case ("10"):
                     Console.Clear();
                     data.SaveDayData();
-                    data.SaveRepositoryData(); 
+                    data.SaveRepositoryData();
                     return;
             }
         }

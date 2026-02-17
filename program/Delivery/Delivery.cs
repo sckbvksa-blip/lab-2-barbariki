@@ -4,14 +4,13 @@ using Enums;
 using Interfaces;
 using Task;
 
-public class Delivery: TaskBase
+public class Delivery : TaskBase
 {
     public PriorityKey priority { get; set; }
     public DeliveryStatus status { get; set; }
 
-    public Delivery(string title, int intPriority)
+    public Delivery(string title, int intPriority) : base(title)
     {
-        base.title = title;
         status = DeliveryStatus.Packing;
         priority = this.GetPriorityKey(intPriority);
     }
