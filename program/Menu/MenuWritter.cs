@@ -1,5 +1,6 @@
 namespace Menu;
 
+using Collections;
 using Runner;
 using Delivery;
 using DayData;
@@ -13,9 +14,9 @@ public class MenuWritter
         ShowDeliveries(state.repository.delivered, "delivered");
     }
 
-    public static void ShowDeliveries(List<Delivery> deliveries, string title)
+    public static void ShowDeliveries(DeliveryCollection deliveries, string title)
     {
-        if (deliveries.Count == 0)
+        if (deliveries.count == 0)
         {
             Console.WriteLine($"There are no {title} deliviries");
             return;
@@ -23,9 +24,10 @@ public class MenuWritter
 
         Console.WriteLine($"{char.ToUpper(title[0]) + title.Substring(1)}:");
 
-        for (int i = 0; i < deliveries.Count; i++)
+        var enumerator = deliveries.GetEnumerator();
+        while (enumerator.MoveNext())
         {
-            Console.WriteLine($"{i + 1}. {deliveries[i]}.");
+            Console.WriteLine(enumerator.Current);
         }
     }
 

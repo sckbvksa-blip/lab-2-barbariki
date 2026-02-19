@@ -63,7 +63,7 @@ public class AppState
 
     public void UpdateHelper()
     {
-        if (repository.deliveries.Count == 0 && repository.delivered.Count == 0 && repository.departured.Count == 0)
+        if (repository.deliveries.count == 0 && repository.delivered.count == 0 && repository.departured.count == 0)
         {
             Console.WriteLine("No deliveries for departue");
             return;
@@ -125,7 +125,7 @@ public class AppState
 
     public void SendHelper()
     {
-        if (repository.deliveries.Count == 0)
+        if (repository.deliveries.count == 0)
         {
             Console.WriteLine("No deliveries for departue");
             return;
@@ -137,9 +137,9 @@ public class AppState
 
     public Delivery FindDelivery(string title)
     {
-        Delivery delivery = repository.deliveries.Find(del => del.title == title);
-        if (delivery == null) delivery = repository.departured.Find(del => del.title == title);
-        if (delivery == null) delivery = repository.delivered.Find(del => del.title == title);
+        Delivery delivery = repository.deliveries.Find(title);
+        if (delivery == null) delivery = repository.departured.Find(title);
+        if (delivery == null) delivery = repository.delivered.Find(title);
         if (delivery == null && title != string.Empty) Console.WriteLine("Delivery not found.");
         return delivery;
     }

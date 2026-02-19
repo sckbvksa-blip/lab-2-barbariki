@@ -27,7 +27,7 @@ public class DeliveryTest
         appState.DeleteDelivery(delivery);
         
         // Assert
-        Assert.That(appState.repository.deliveries.Count, Is.EqualTo(0));
+        Assert.That(appState.repository.deliveries.count, Is.EqualTo(0));
     }
     
     [Test] // - integration test

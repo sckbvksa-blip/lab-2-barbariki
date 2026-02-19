@@ -1,12 +1,14 @@
+using Collections;
+
 namespace DeliveryRepository;
 
 using Delivery;
 
 public class DeliveryRepository
 {
-    public List<Delivery> deliveries { get; set; } = new List<Delivery>();
-    public List<Delivery> departured { get; set; } = new List<Delivery>();
-    public List<Delivery> delivered { get; set; } = new List<Delivery>();
+    public DeliveryCollection deliveries { get; set; } = new DeliveryCollection();
+    public DeliveryCollection departured { get; set; } = new DeliveryCollection();
+    public DeliveryCollection delivered { get; set; } = new DeliveryCollection();
     public DeliveryRepository() { }
 
 }

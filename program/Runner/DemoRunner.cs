@@ -1,3 +1,5 @@
+using Comparer;
+
 namespace Runner;
 
 using Menu;
@@ -44,30 +46,37 @@ public class DemoRunner
 
                 case ("6"):
                     Console.Clear();
-                    data.QuickSortByPriority(data.repository.deliveries, 0, data.repository.deliveries.Count - 1);
+                    Array.Sort(data.repository.deliveries.items);
                     Console.WriteLine("Successfully sorted by priority.");
                     break;
-
+                
                 case ("7"):
                     Console.Clear();
-                    MenuWritter.ShowDayResult(data.currentDay);
+                    Array.Sort(data.repository.deliveries.items, new DeliveryTitleComparer());
+                    Console.WriteLine("Successfully sorted by priority.");
                     break;
 
                 case ("8"):
                     Console.Clear();
-                    data.NextDay();
+                    MenuWritter.ShowDayResult(data.currentDay);
                     break;
 
                 case ("9"):
                     Console.Clear();
-                    MenuWritter.ShowAllDaysResult(data);
+                    data.NextDay();
                     break;
 
                 case ("10"):
                     Console.Clear();
+                    MenuWritter.ShowAllDaysResult(data);
+                    break;
+
+                case ("11"):
+                    Console.Clear();
                     data.SaveDayData();
                     data.SaveRepositoryData();
                     return;
+                
             }
         }
     }
