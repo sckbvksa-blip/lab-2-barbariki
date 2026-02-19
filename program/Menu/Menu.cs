@@ -5,7 +5,7 @@ public class Menu
     public static string[] menuItems =
     {
         "Add Delivery", "Update delivery", "Show All deliveries",
-        "Show all undelivered", "Send delivery", "Sort by priority",
+        "Show all undelivered", "Send delivery", "Sort by priority","Sort by title",
         "Day result", "Next day", "Show all days result", "Exit"
     };
 
