@@ -44,7 +44,7 @@ public class DemoRunner
 
                 case ("6"):
                     Console.Clear();
-                    data.QuickSortByPriority(data.repository.deliveries, 0, data.repository.deliveries.Count - 1);
+                    Array.Sort(data.repository.deliveries.items);
                     Console.WriteLine("Successfully sorted by priority.");
                     break;
 

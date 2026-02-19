@@ -66,7 +66,7 @@ public class GetSaveData
         DeliveryRepository deliveryRepository = appState.GetRepositoryData();
         
         // Assert
-        Assert.That(deliveryRepository.deliveries.Count, Is.EqualTo(0));
+        Assert.That(deliveryRepository.deliveries.count, Is.EqualTo(0));
     }
     
     [Test] // - integration test
